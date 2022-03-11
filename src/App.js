@@ -39,6 +39,7 @@ function TransactionsItem({transaction}) {
   return (
     <tr className={`transactions-item ${isDebit ? "transaction-row-debit" : ""}`}>
       <td>{moment(Date).format("MMM Do, YYYY")}</td>
+      {/* Moment is probably wasteful to import for just ordinal date, but used here to save time. */}
       <td>{Company}</td>
       <td>{Ledger}</td>
       <td className='transaction-cell-right'>{`$${Math.abs(numAmount).toLocaleString('en-CA', {minimumFractionDigits: 2})}`}</td>
@@ -90,12 +91,12 @@ function App() {
         setError(true);
       }
     }
-    
+    console.log(allTransactions)
     setTransactions(allTransactions);
   }
 
   return (
-    <div className="App">
+    <div>
       <Nav />
       {error && <ErrorMessage />}
       {Array.isArray(transactions) ? 
