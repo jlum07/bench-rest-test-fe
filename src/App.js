@@ -10,6 +10,12 @@ function Nav() {
   )
 }
 
+function ErrorMessage() {
+  return (
+    <div className='message error'>Something has gone wrong loading transactions. Please try again later.</div>
+  )
+}
+
 function TransactionsHeader ({transactions}) {
   const sum = transactions.reduce((acc, transaction) => acc + Number(transaction.Amount), 0);
   return (
@@ -22,7 +28,7 @@ function TransactionsHeader ({transactions}) {
   )
 }
 
-function TransactionsItem ({transaction}) {
+function TransactionsItem({transaction}) {
   
   const {Date, Company, Ledger, Amount} = transaction;
   const numAmount = Number(Amount);
@@ -38,7 +44,7 @@ function TransactionsItem ({transaction}) {
   )
 }
 
-function Transactions ({transactions}) {
+function Transactions({transactions}) {
   return (
     <table className='transactions-table'>
       <TransactionsHeader transactions={transactions} />
@@ -49,7 +55,7 @@ function Transactions ({transactions}) {
   )
 }
 
-function Loading () {
+function Loading() {
   return (
     <div className='message'>Loading...</div>
   )
@@ -58,12 +64,12 @@ function Loading () {
 function App() {
   
   const [transactions, setTransactions] = useState(false);
+  const [error, setError] = useState(false);
   
   useEffect(()=> {
     setTransactions(fetchTransactions())
   }, [])
 
-  console.log(transactions)
   async function fetchTransactions() {
     let allTransactions = [];
     let page = 1;
@@ -72,9 +78,13 @@ function App() {
     while (morePages) {
       let response = await fetch(`https://resttest.bench.co/transactions/${page}.json`);
       let { totalCount, transactions } = await response.json();
-      allTransactions = allTransactions.concat(transactions);
-      page++;
-      morePages = allTransactions.length < totalCount;
+      if (response.status === 200) {
+        allTransactions = allTransactions.concat(transactions);
+        page++;
+        morePages = allTransactions.length < totalCount;
+      } else {
+        setError(true);
+      }
     }
     
     setTransactions(allTransactions);
@@ -83,6 +93,7 @@ function App() {
   return (
     <div className="App">
       <Nav />
+      {!error && <ErrorMessage />}
       {Array.isArray(transactions) ? 
         <Transactions transactions={transactions} />
       :

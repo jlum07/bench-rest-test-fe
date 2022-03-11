@@ -11,7 +11,11 @@
 
 .message {
   text-align: center;
-  margin: 5rem;
+  margin: 2rem;
+}
+
+.error {
+  color: #ff0000;
 }
 
 .transactions-table {
