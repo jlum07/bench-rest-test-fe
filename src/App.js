@@ -17,8 +17,7 @@ function TransactionsHeader ({transactions}) {
       <th>Date</th>
       <th>Company</th>
       <th>Account</th>
-      <th className='transaction-cell-right'>{`$${sum.toFixed(2)}`}</th>
-      {/* TODO - Use request data */}
+      <th className='transaction-cell-right'>{`$${sum.toLocaleString('en-CA', {minimumFractionDigits: 2})}`}</th>
     </tr>
   )
 }
@@ -34,7 +33,7 @@ function TransactionsItem ({transaction}) {
       <td>{moment(Date).format("MMM Do, YYYY")}</td>
       <td>{Company}</td>
       <td>{Ledger}</td>
-      <td className='transaction-cell-right'>{`$${Math.abs(numAmount).toFixed(2)}`}</td>
+      <td className='transaction-cell-right'>{`$${Math.abs(numAmount).toLocaleString('en-CA', {minimumFractionDigits: 2})}`}</td>
     </tr>
   )
 }
