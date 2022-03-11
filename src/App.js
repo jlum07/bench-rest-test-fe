@@ -19,12 +19,14 @@ function ErrorMessage() {
 function TransactionsHeader ({transactions}) {
   const sum = transactions.reduce((acc, transaction) => acc + Number(transaction.Amount), 0);
   return (
-    <tr className='transactions-header'>
-      <th>Date</th>
-      <th>Company</th>
-      <th>Account</th>
-      <th className='transaction-cell-right'>{`$${sum.toLocaleString('en-CA', {minimumFractionDigits: 2})}`}</th>
-    </tr>
+    <thead>
+      <tr className='transactions-header'>
+        <th>Date</th>
+        <th>Company</th>
+        <th>Account</th>
+        <th className='transaction-cell-right'>{`$${sum.toLocaleString('en-CA', {minimumFractionDigits: 2})}`}</th>
+      </tr>
+    </thead>
   )
 }
 
@@ -48,9 +50,11 @@ function Transactions({transactions}) {
   return (
     <table className='transactions-table'>
       <TransactionsHeader transactions={transactions} />
-      {transactions.map((transaction) => (
-        <TransactionsItem transaction={transaction} />
-      ))}
+      <tbody>
+        {transactions.map((transaction, i) => (
+          <TransactionsItem key={`transaction-${i}`} transaction={transaction} />
+        ))}
+      </tbody>
     </table>
   )
 }
@@ -93,7 +97,7 @@ function App() {
   return (
     <div className="App">
       <Nav />
-      {!error && <ErrorMessage />}
+      {error && <ErrorMessage />}
       {Array.isArray(transactions) ? 
         <Transactions transactions={transactions} />
       :
