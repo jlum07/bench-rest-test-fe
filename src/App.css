@@ -36,3 +36,11 @@
   background-color: #fafaf8;
   color: #3e3f44;
 }
+
+.transaction-cell-right {
+  text-align: right;
+}
+
+.transaction-row-debit {
+  color: #319b9e;
+}

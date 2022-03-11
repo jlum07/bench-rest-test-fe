@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import moment from 'moment';
 import './App.css';
 
 function Nav() {
@@ -22,13 +23,17 @@ function TransactionsHeader () {
 }
 
 function TransactionsItem ({transaction}) {
+  
   const {Date, Company, Ledger, Amount} = transaction;
+  const numAmount = Number(Amount);
+  const isDebit = numAmount > 0;
+
   return (
-    <tr className='transactions-item'>
-      <td>{Date}</td>
+    <tr className={`transactions-item ${isDebit ? "transaction-row-debit" : ""}`}>
+      <td>{moment(Date).format("MMM Do, YYYY")}</td>
       <td>{Company}</td>
       <td>{Ledger}</td>
-      <td>{Amount}</td>
+      <td className='transaction-cell-right'>{`$${Math.abs(numAmount).toFixed(2)}`}</td>
     </tr>
   )
 }
