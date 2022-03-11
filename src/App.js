@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
 function Nav() {
@@ -31,22 +32,57 @@ function TransactionsItem () {
   )
 }
 
-function Transactions () {
+function Transactions ({transactions}) {
   return (
     <table className='transactions-table'>
       <TransactionsHeader />
-      <TransactionsItem />
-      <TransactionsItem />
+      {transactions.map((transaction) => (
+        <TransactionsItem />
+      ))}
     </table>
   )
 }
 
+function Loading () {
+  return (
+    <div className='message'>Loading...</div>
+  )
+}
+
 function App() {
+  
+  const [transactions, setTransactions] = useState(false);
+  
+  useEffect(()=> {
+    setTransactions(fetchTransactions())
+  }, [])
+
+  console.log(transactions)
+  async function fetchTransactions() {
+    let allTransactions = [];
+    let page = 1;
+    let morePages = true;
+    
+    while (morePages) {
+      let response = await fetch(`https://resttest.bench.co/transactions/${page}.json`);
+      let { totalCount, transactions } = await response.json();
+      allTransactions = allTransactions.concat(transactions);
+      page++;
+      morePages = allTransactions.length < totalCount;
+    }
+    
+    setTransactions(allTransactions);
+  }
 
   return (
     <div className="App">
       <Nav />
-      <Transactions />
+      {transactions ? 
+        <Transactions transactions={transactions} />
+      :
+        <Loading />
+      }
+      
     </div>
   );
 }
