@@ -37,6 +37,10 @@
   border-top: 1px solid #ececec;
 }
 
+.item-light {
+  color: #9c9c9e;
+}
+
 .transaction-cell-right {
   text-align: right;
 }
