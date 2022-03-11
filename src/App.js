@@ -21,13 +21,14 @@ function TransactionsHeader () {
   )
 }
 
-function TransactionsItem () {
+function TransactionsItem ({transaction}) {
+  const {Date, Company, Ledger, Amount} = transaction;
   return (
     <tr className='transactions-item'>
-      <td>2013-12-22</td>
-      <td>SHAW CABLESYSTEMS CALGARY AB</td>
-      <td>Phone & Internet Expense</td>
-      <td>-110.71</td>
+      <td>{Date}</td>
+      <td>{Company}</td>
+      <td>{Ledger}</td>
+      <td>{Amount}</td>
     </tr>
   )
 }
@@ -37,7 +38,7 @@ function Transactions ({transactions}) {
     <table className='transactions-table'>
       <TransactionsHeader />
       {transactions.map((transaction) => (
-        <TransactionsItem />
+        <TransactionsItem transaction={transaction} />
       ))}
     </table>
   )
@@ -77,7 +78,7 @@ function App() {
   return (
     <div className="App">
       <Nav />
-      {transactions ? 
+      {Array.isArray(transactions) ? 
         <Transactions transactions={transactions} />
       :
         <Loading />
