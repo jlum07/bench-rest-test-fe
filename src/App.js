@@ -10,13 +10,14 @@ function Nav() {
   )
 }
 
-function TransactionsHeader () {
+function TransactionsHeader ({transactions}) {
+  const sum = transactions.reduce((acc, transaction) => acc + Number(transaction.Amount), 0);
   return (
     <tr className='transactions-header'>
       <th>Date</th>
       <th>Company</th>
       <th>Account</th>
-      <th>$100.00</th>
+      <th className='transaction-cell-right'>{`$${sum.toFixed(2)}`}</th>
       {/* TODO - Use request data */}
     </tr>
   )
@@ -41,7 +42,7 @@ function TransactionsItem ({transaction}) {
 function Transactions ({transactions}) {
   return (
     <table className='transactions-table'>
-      <TransactionsHeader />
+      <TransactionsHeader transactions={transactions} />
       {transactions.map((transaction) => (
         <TransactionsItem transaction={transaction} />
       ))}
