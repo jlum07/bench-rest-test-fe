@@ -2,7 +2,7 @@
   text-align: center;
   background-color: #2b8b8b;
   color: #ffffff;
-  padding: 1rem;
+  padding: 1.5rem;
 }
 
 .message {
@@ -15,10 +15,9 @@
 }
 
 .transactions-table {
-  margin: 1rem auto;
+  margin: 2rem auto;
   min-width: 90%;
   border-collapse: collapse;
-  border-radius: 5px;
   background-color: white;
   text-align: left;
 }
@@ -35,6 +34,7 @@
 .transactions-item {
   background-color: #fafaf8;
   color: #3e3f44;
+  border-top: 1px solid #ececec;
 }
 
 .transaction-cell-right {

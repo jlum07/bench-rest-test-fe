@@ -76,6 +76,7 @@ function App() {
   }, [])
 
   async function fetchTransactions() {
+    
     let allTransactions = [];
     let page = 1;
     let morePages = true;
@@ -91,7 +92,7 @@ function App() {
         setError(true);
       }
     }
-    console.log(allTransactions)
+
     setTransactions(allTransactions);
   }
 
